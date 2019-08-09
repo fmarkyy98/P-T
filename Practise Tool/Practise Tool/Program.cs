@@ -6,9 +6,9 @@ namespace Practise_Tool
     {
         static void Main(string[] args)
         {
-            int x = 0, y = 0, Solution = 0;
+            double x = 0, y = 0, Solution = 0;
             char operation;
-            Console.WriteLine("Write down the two operator splitted with ';' character!");
+            Console.WriteLine("Write down the two number splitted with ';' character!");
             string input = Console.ReadLine();
             bool failure = false;
             do
@@ -19,7 +19,8 @@ namespace Practise_Tool
                     input = Console.ReadLine();
                 }
                 string[] split = input.Split(';');
-                if (!(int.TryParse(split[0], out x) && int.TryParse(split[1], out y))) failure = true;
+                if (double.TryParse(split[0], out x) && double.TryParse(split[1], out y)) failure = false;
+                else failure = true;
             } while (failure);
             Console.WriteLine("write down the operator!");
             input = Console.ReadLine();
@@ -36,22 +37,27 @@ namespace Practise_Tool
                 {
                     case '+':
                         Solution = x + y;
+                        failure = false;
                         break;
                     case '-':
                         Solution = x - y;
+                        failure = false;
                         break;
                     case '*':
                         Solution = x * y;
+                        failure = false;
                         break;
                     case '/':
-                        Solution = x / y;
+                        try { Solution = x / y; }
+                        catch (DivideByZeroException) { Console.WriteLine("Nullával való osztás nem értelmezhető."); return; }
+                        failure = false;
                         break;
                     default:
                         failure = true;
                         break;
                 }
             } while (failure);
-            Console.WriteLine($"{x} {operation} {y} = {Solution}");
+            Console.WriteLine($"{x} {operation} {y} = {Solution.ToString("0.##")}");
             Console.ReadKey();
         }
     }
