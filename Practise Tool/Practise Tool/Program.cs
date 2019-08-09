@@ -48,8 +48,8 @@ namespace Practise_Tool
                         failure = false;
                         break;
                     case '/':
-                        try { Solution = x / y; }
-                        catch (DivideByZeroException) { Console.WriteLine("Nullával való osztás nem értelmezhető."); return; }
+                        if (y == 0) { Console.WriteLine("Nullával való osztás nem értelmezhető."); return; }
+                        Solution = x / y;
                         failure = false;
                         break;
                     default:
